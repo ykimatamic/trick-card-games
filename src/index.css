@@ -1,0 +1,382 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #10131a;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ゲーム選択メニュー */
+.menu-screen {
+  --bg-a: #16352a;
+  --bg-b: #0f241c;
+  --card-bg: rgba(16, 28, 22, 0.45);
+  --card-border: #2a3a30;
+  --card-hover: rgba(30, 60, 44, 0.7);
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, var(--bg-a), var(--bg-b));
+  color: #e8ecf2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem 3rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.menu-screen[data-theme='dark'] {
+  --bg-a: #1c2230;
+  --bg-b: #10131a;
+  --card-bg: rgba(16, 20, 30, 0.45);
+  --card-border: #2a3442;
+  --card-hover: rgba(32, 42, 58, 0.85);
+}
+
+/* 背景に漂うカード */
+.menu-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.menu-float {
+  position: absolute;
+  font-size: 6rem;
+  line-height: 1;
+  opacity: 0.08;
+  color: #fff;
+  animation: menuFloat 14s ease-in-out infinite;
+  user-select: none;
+}
+
+.menu-float-0 { left: 5%;  top: 12%; animation-delay: 0s; }
+.menu-float-1 { left: 88%; top: 22%; animation-delay: 2s; font-size: 5rem; }
+.menu-float-2 { left: 10%; top: 72%; animation-delay: 4s; font-size: 5.5rem; }
+.menu-float-3 { left: 78%; top: 78%; animation-delay: 6s; }
+.menu-float-4 { left: 48%; top: 6%;  animation-delay: 8s; font-size: 4rem; }
+
+@keyframes menuFloat {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50%      { transform: translateY(-28px) rotate(6deg); }
+}
+
+.menu-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  z-index: 1;
+  animation: menuDrop 0.6s ease-out both;
+}
+
+/* ヘッダーのカードファン */
+.menu-fan {
+  position: relative;
+  width: 150px;
+  height: 92px;
+  margin: 0 auto 0.6rem;
+}
+
+.menu-fan-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 76px;
+  border: 1px solid #e7c77b;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fffdf5, #f4ecd7);
+  color: #a33;
+  font-weight: 800;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  transform-origin: 50% 120%;
+  animation: menuCardSway 4s ease-in-out infinite;
+}
+
+.menu-fan-1 { transform: translate(-50%, -50%) rotate(-24deg); animation-delay: 0s; }
+.menu-fan-2 { transform: translate(-50%, -50%) rotate(-8deg);  animation-delay: 0.4s; }
+.menu-fan-3 { transform: translate(-50%, -50%) rotate(8deg);   animation-delay: 0.8s; }
+.menu-fan-4 { transform: translate(-50%, -50%) rotate(24deg);  animation-delay: 1.2s; }
+/* 中央のカードを上に */
+.menu-fan-2, .menu-fan-3 { z-index: 1; }
+
+@keyframes menuCardSway {
+  0%, 100% { filter: brightness(1); }
+  25%      { filter: brightness(1.18); }
+  50%      { filter: brightness(1); }
+}
+
+.menu-title {
+  font-size: 2.3rem;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, #e74c3c, #f39c12, #27ae60, #2980b9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.menu-tagline {
+  margin-top: 0.5rem;
+  color: #cfd6df;
+  font-size: 1rem;
+}
+
+.menu-tagline b {
+  color: #ffd54f;
+}
+
+.menu-theme-btn {
+  margin-top: 14px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  line-height: 1;
+  background: #34495e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.menu-theme-btn:hover {
+  background: #2c3e50;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 今日のピックアップ */
+.menu-featured {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 920px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid color-mix(in srgb, var(--accent, #f39c12) 55%, transparent);
+  border-left: 6px solid var(--accent, #f39c12);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+  animation: menuSlideUp 0.6s 0.12s ease-out both;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1;
+}
+
+.menu-featured:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--accent, #f39c12) 35%, rgba(0, 0, 0, 0.4));
+}
+
+.menu-featured-badge {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  padding: 2px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #1b130a;
+  background: var(--accent, #f39c12);
+  border-radius: 999px;
+}
+
+.menu-featured-icon {
+  font-size: 2.4rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+.menu-featured-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.menu-featured-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.menu-featured-desc {
+  font-size: 0.82rem;
+  color: #b9c1cc;
+  line-height: 1.45;
+}
+
+.menu-featured-play {
+  align-self: flex-end;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent, #f39c12);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 920px;
+  z-index: 1;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.15rem 1.25rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  color: inherit;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+  transition: transform 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease, background 0.18s ease;
+  animation: menuSlideUp 0.55s ease-out both;
+  animation-delay: calc(var(--i, 0) * 70ms + 0.15s);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% -20%, color-mix(in srgb, var(--accent, #27ae60) 40%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.menu-card:hover,
+.menu-card:focus-visible,
+.menu-card.menu-card-hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: color-mix(in srgb, var(--accent, #27ae60) 70%, #4a5b75);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--accent, #27ae60) 30%, rgba(0, 0, 0, 0.4));
+  background: var(--card-hover);
+  outline: none;
+}
+
+.menu-card:hover::before,
+.menu-card.menu-card-hover::before {
+  opacity: 1;
+}
+
+.menu-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-card-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--accent, #27ae60) 26%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #27ae60) 45%, transparent);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--accent, #27ae60) 30%, transparent);
+  transition: transform 0.2s ease;
+}
+
+.menu-card:hover .menu-card-icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.menu-card-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  color: #c3cad3;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.menu-card-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.menu-card-desc {
+  font-size: 0.84rem;
+  color: #a9b2c0;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.menu-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.35rem;
+}
+
+.menu-card-players {
+  font-size: 0.78rem;
+  color: #7fd0a0;
+}
+
+.menu-card-start {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: transparent;
+  background: linear-gradient(90deg, var(--accent, #27ae60), #ffd54f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.menu-card:hover .menu-card-start,
+.menu-card.menu-card-hover .menu-card-start {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.menu-footer {
+  margin-top: 2rem;
+  color: #7c8794;
+  font-size: 0.82rem;
+  animation: menuSlideUp 0.6s 0.5s ease-out both;
+  z-index: 1;
+}
+
+@keyframes menuSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes menuDrop {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

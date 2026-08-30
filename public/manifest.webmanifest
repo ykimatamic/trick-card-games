@@ -1,0 +1,17 @@
+{
+  "name": "トランプカードゲーム集",
+  "short_name": "トランプゲーム",
+  "description": "クロンダイク・ソリティア、ババ抜き、7並べ、大富豪などのトランプゲーム集。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10131a",
+  "theme_color": "#1a6b3c",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

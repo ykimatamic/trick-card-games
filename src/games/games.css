@@ -1,0 +1,1733 @@
+/* ============================================================
+   対戦型カードゲーム共通スタイル
+   ソリティア(.board / Board.css)と同じ品質・変数運用に合わせる
+   ============================================================ */
+
+.mp-table {
+  --card-w: clamp(48px, calc((100vw - 40px) / 8), 92px);
+  --card-h: calc(var(--card-w) * 1.4);
+  --card-radius: 0.09;
+
+  --felt: #1a6b3c;
+  --felt-glow-bright: rgba(255, 255, 255, 0.03);
+  --felt-glow-dark: rgba(0, 0, 0, 0.05);
+  --card-back-a: #2c3e50;
+  --card-back-b: #34495e;
+  --card-back-border: #1a252f;
+
+  --accent: #f1c40f;
+  --accent-soft: rgba(241, 196, 15, 0.16);
+  --panel: rgba(0, 0, 0, 0.25);
+  --text: #e8ecf2;
+  --muted: #a9b2c0;
+  --line: rgba(255, 255, 255, 0.14);
+
+  min-height: 100vh;
+  padding: 1rem;
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--felt);
+  background-image:
+    radial-gradient(circle at 20% 30%, var(--felt-glow-bright) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--felt-glow-dark) 0%, transparent 50%);
+}
+
+.mp-table[data-theme='dark'] {
+  --felt: #151b29;
+  --felt-glow-bright: rgba(255, 255, 255, 0.02);
+  --card-back-a: #3b2f63;
+  --card-back-b: #2a2148;
+  --card-back-border: #191231;
+  --panel: rgba(255, 255, 255, 0.04);
+}
+
+.mp-table-sevens {
+  --felt: #1a5c52;
+  --accent: #2ecc71;
+  --accent-soft: rgba(46, 204, 113, 0.16);
+}
+
+.mp-table-sevens[data-theme='dark'] {
+  --felt: #16242a;
+  --accent: #2ecc71;
+}
+
+.mp-table-daifugo {
+  --felt: #5b4120;
+  --accent: #e74c3c;
+  --accent-soft: rgba(231, 76, 60, 0.16);
+}
+
+.mp-table-daifugo[data-theme='dark'] {
+  --felt: #241a12;
+  --accent: #e74c3c;
+}
+
+/* ---- 一般ボタン(ソリティア .icon-btn / .auto-btn 相当) ---- */
+
+.mp-table button {
+  font-family: inherit;
+}
+
+.mp-icon-btn {
+  padding: 10px 12px;
+  font-size: 1rem;
+  line-height: 1;
+  color: #fff;
+  background: #34495e;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mp-icon-btn:hover {
+  background: #2c3e50;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mp-icon-btn:active {
+  transform: translateY(0);
+}
+
+.mp-icon-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.mp-restart {
+  background: #16a085;
+}
+
+.mp-restart:hover {
+  background: #149077;
+}
+
+.mp-primary {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background: #27ae60;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mp-primary:hover:not(:disabled) {
+  background: #2fbf6a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mp-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.mp-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mp-ghost {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: #d6dee8;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mp-ghost:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-2px);
+}
+
+/* ---- トップバー ---- */
+
+.mp-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 10px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+}
+
+.mp-title {
+  margin: 0;
+  font-size: 1.4rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mp-top-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mp-subtitle {
+  margin: 0.5rem 0 1.5rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---- ロビー(人数選択) ---- */
+
+.mp-lobby {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 2.5rem 2.25rem;
+  background: rgba(6, 12, 9, 0.55);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  max-width: 100%;
+}
+
+.mp-table[data-theme='dark'] .mp-lobby {
+  background: rgba(10, 14, 22, 0.6);
+}
+
+.mp-lobby-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.mp-lobby-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.mp-lobby-label {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.mp-lobby-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.mp-lobby-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mp-lobby-gap {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0 0.25rem;
+}
+
+.mp-lobby-chip {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mp-lobby-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.mp-lobby-chip.mp-selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.mp-start {
+  padding: 0.75rem 3rem;
+  font-size: 1.1rem;
+}
+
+/* ---- ステータス ---- */
+
+.mp-status {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.mp-turn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+
+.mp-turn::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 80%, transparent);
+  animation: mpBlink 1.1s ease-in-out infinite;
+}
+
+.mp-turn.mp-done::before {
+  display: none;
+}
+
+@keyframes mpBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ---- 相手エリア ---- */
+
+.mp-opponents {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  min-height: 150px;
+}
+
+.mp-opponent {
+  padding: 0.7rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  text-align: center;
+  min-width: 120px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.mp-opponent-target {
+  animation: mpTargetGlow 1.3s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes mpTargetGlow {
+  0%, 100% {
+    border-color: #f1c40f;
+    box-shadow: 0 0 6px rgba(241, 196, 15, 0.35);
+  }
+  50% {
+    border-color: #f9e07a;
+    box-shadow: 0 0 20px rgba(241, 196, 15, 0.75);
+  }
+}
+
+.mp-opponent-out {
+  opacity: 0.5;
+}
+
+.mp-opponent-active {
+  border-color: var(--accent);
+}
+
+.mp-opponent-name {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.mp-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 12px;
+  background: #f1c40f;
+  color: #222;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.mp-badge-out {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 12px;
+  background: #7f8c8d;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.mp-opponent-cards {
+  display: flex;
+  justify-content: center;
+  min-height: calc(var(--card-h) * 0.85);
+}
+
+.mp-opponent-card {
+  transition: transform 0.14s ease;
+}
+
+.mp-opponent-target .mp-opponent-card {
+  transform: translateY(-4px);
+}
+
+.mp-opponent-target:hover .mp-opponent-card {
+  transform: translateY(-9px);
+}
+
+.mp-opponent-card:hover {
+  transform: translateY(-5px);
+}
+
+.mp-hand-count {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.05rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #cdd6e1;
+}
+
+/* ---- 自分の手札 ---- */
+
+.mp-hand-wrap {
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+.mp-hand-label {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #e6edf5;
+}
+
+.mp-hand {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  max-height: 30vh;
+  overflow: auto;
+  padding: 0.75rem 0.5rem;
+}
+
+.mp-card-slot {
+  animation: mpDealIn 0.3s ease-out both;
+  animation-delay: calc(var(--i, 0) * 20ms);
+}
+
+@keyframes mpDealIn {
+  from {
+    transform: translateY(-12px) scale(0.93);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* ---- カード描画(MpCardView 相当) ---- */
+
+.mp-card {
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+  border-radius: calc(var(--card-w) * var(--card-radius));
+  border: 1px solid #0a0e14;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: inherit;
+  background: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.mp-card-small {
+  width: calc(var(--card-w) * 0.9);
+  height: calc(var(--card-h) * 0.9);
+}
+
+.mp-card-mini {
+  width: calc(var(--card-w) * 0.72);
+  height: calc(var(--card-h) * 0.72);
+}
+
+.mp-card-face {
+  background: linear-gradient(160deg, #ffffff 0%, #f2f4f7 100%);
+  border: 2px solid #ccc;
+  color: #2c3e50;
+  cursor: grab;
+}
+
+button.mp-card-face {
+  border: none;
+  cursor: pointer;
+}
+
+.mp-card-face:hover:not(.mp-card-disabled) {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+}
+
+.mp-card-back {
+  background: linear-gradient(135deg, var(--card-back-a) 0%, var(--card-back-b) 100%);
+  border: 3px solid var(--card-back-border);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mp-card-back-pattern {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.32);
+  font-size: calc(var(--card-w) * 0.32);
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 5px,
+      rgba(255, 255, 255, 0.03) 5px,
+      rgba(255, 255, 255, 0.03) 10px
+    );
+}
+
+.mp-card-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mp-card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 12px 4px rgba(241, 196, 15, 0.5);
+}
+
+.mp-card-corner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.mp-card-tl {
+  top: calc(var(--card-w) * 0.05);
+  left: calc(var(--card-w) * 0.08);
+}
+
+.mp-card-br {
+  bottom: calc(var(--card-w) * 0.05);
+  right: calc(var(--card-w) * 0.08);
+  transform: rotate(180deg);
+}
+
+.mp-card-rank {
+  font-size: calc(var(--card-w) * 0.165);
+  font-weight: 700;
+}
+
+.mp-card-suit {
+  font-size: calc(var(--card-w) * 0.145);
+}
+
+.mp-card-center {
+  text-align: center;
+  pointer-events: none;
+}
+
+.mp-card-suit-large {
+  font-size: calc(var(--card-w) * 0.36);
+  line-height: 1;
+}
+
+.mp-joker-label {
+  display: block;
+  font-size: calc(var(--card-w) * 0.13);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 0.2em;
+}
+
+/* ---- 結果オーバーレイ ---- */
+
+.mp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: mpFadeIn 0.28s ease;
+}
+
+@keyframes mpFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mp-modal {
+  background: linear-gradient(180deg, #1f2837 0%, #171e2a 100%);
+  border: 1px solid #2f3b4d;
+  border-radius: 18px;
+  padding: 1.75rem 2.25rem;
+  max-width: min(92vw, 420px);
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  animation: mpSlideUp 0.32s ease;
+}
+
+@keyframes mpSlideUp {
+  from { transform: translateY(42px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.mp-modal h3 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  color: var(--accent);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.mp-reveal-card {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mp-reveal-card .mp-card {
+  width: 92px;
+  height: 128px;
+  font-size: 1.4rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.mp-reveal-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.mp-ranking {
+  text-align: left;
+  margin: 0 0 1.3rem;
+  padding: 0;
+  list-style: none;
+}
+
+.mp-ranking li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  animation: mpDealIn 0.25s ease-out both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+.mp-ranking li + li {
+  margin-top: 0.3rem;
+}
+
+.mp-ranking li.mp-first {
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.mp-rank-medal {
+  font-size: 1.25rem;
+  width: 2em;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.mp-rank-name {
+  font-weight: 700;
+  flex: 1;
+  text-align: left;
+}
+
+.mp-rank-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.mp-loser {
+  color: #ff8a80;
+  font-weight: 700;
+}
+
+.mp-modal .mp-primary,
+.mp-modal .mp-ghost {
+  margin: 0.25rem;
+}
+
+.mp-modal-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.mp-modal-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 0.2rem 0 1.2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.mp-modal-stats b {
+  color: var(--text);
+}
+
+.mp-record {
+  margin: 0.5rem 0 0.9rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mp-record-title {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.04em;
+}
+
+.mp-record-cols {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.mp-record-cols b {
+  color: var(--accent);
+}
+
+/* ---- 7並べ ---- */
+
+.sv-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin: 0.25rem auto 1rem;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.sv-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sv-suit-label {
+  width: 72px;
+  text-align: right;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sv-slots {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.sv-slot {
+  width: calc(var(--card-w) * 0.7);
+  height: calc(var(--card-h) * 0.7);
+  animation: mpDealIn 0.3s ease-out both;
+}
+
+.sv-slot .mp-card {
+  width: 100%;
+  height: 100%;
+}
+
+.sv-empty,
+.sv-sevens .sv-empty {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sv-sevens .sv-empty {
+  background: var(--accent-soft);
+  border: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.sv-players {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.sv-player-chip {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid transparent;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.sv-player-chip.sv-active {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent-soft);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  animation: mpBlink 1.4s ease-in-out infinite;
+}
+
+.sv-player-chip.sv-you {
+  font-weight: 700;
+}
+
+.sv-card-playable {
+  animation: svPulse 1.1s ease-in-out infinite;
+  border-radius: 10px;
+}
+
+@keyframes svPulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.45); }
+  50% { box-shadow: 0 0 0 5px rgba(39, 174, 96, 0.85); }
+}
+
+.sv-actions {
+  margin-top: 0.7rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ---- 神経衰弱 ---- */
+
+.mp-table-memory {
+  --felt: #26436d;
+  --accent: #f39c12;
+  --accent-soft: rgba(243, 156, 18, 0.16);
+}
+
+.mp-table-memory[data-theme='dark'] {
+  --felt: #171f30;
+  --accent: #f39c12;
+}
+
+.mm-players {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.mm-player-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.mm-player-chip.mm-you {
+  font-weight: 700;
+}
+
+.mm-player-chip.mm-active {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent-soft);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  animation: mpBlink 1.4s ease-in-out infinite;
+}
+
+.mm-player-count {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.mm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(var(--card-w) * 0.66), 1fr));
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto 1rem;
+  justify-content: center;
+}
+
+.mm-slot {
+  position: relative;
+  width: var(--card-w);
+  max-width: 100%;
+  height: var(--card-h);
+}
+
+.mm-slot .mp-card {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mm-slot.mm-up .mp-card {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 3px var(--accent), 0 6px 14px rgba(0, 0, 0, 0.4);
+  animation: mmReveal 0.35s ease;
+}
+
+@keyframes mmReveal {
+  from { transform: scale(0.82) rotateY(90deg); opacity: 0.3; }
+  to { transform: scale(1) rotateY(0); opacity: 1; }
+}
+
+.mm-slot-empty {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: calc(var(--card-w) * 0.09);
+}
+
+/* ---- ブラックジャック ---- */
+
+.mp-table-blackjack {
+  --felt: #1e5631;
+  --accent: #e67e22;
+  --accent-soft: rgba(230, 126, 34, 0.16);
+}
+
+.mp-table-blackjack[data-theme='dark'] {
+  --felt: #141c1a;
+  --accent: #e67e22;
+}
+
+.bj-bank {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.bj-bank b {
+  color: var(--accent);
+  font-size: 1.15rem;
+}
+
+.bj-bet {
+  margin-left: 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.bj-area {
+  max-width: 560px;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bj-label {
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bj-total {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.bj-hand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  min-height: calc(var(--card-h) * 1.1);
+}
+
+.bj-card-slot {
+  animation: mpDealIn 0.25s ease-out both;
+}
+
+.bj-empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.bj-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.bj-bet-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bj-chip-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #f1c40f;
+  background: radial-gradient(circle at 30% 30%, #f9e79f, #d4ac0d 70%);
+  color: #5c4300;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.bj-chip-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+}
+
+.mp-table-blackjack .mp-primary.bj-act {
+  background: #c0392b;
+}
+
+.mp-table-blackjack .mp-primary.bj-act:hover:not(:disabled) {
+  background: #d4483a;
+}
+
+.mp-table-blackjack .mp-primary.bj-act:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bj-dealer-play {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.bj-plus {
+  color: #2ecc71;
+}
+
+.bj-minus {
+  color: #e74c3c;
+}
+
+.bj-modal-bank {
+  color: var(--muted);
+  margin: 0 0 0.4rem;
+}
+
+.bj-modal-bank b {
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+/* ---- ダウト ---- */
+
+.mp-table-cheat {
+  --felt: #3d2b52;
+  --accent: #e84393;
+  --accent-soft: rgba(232, 67, 147, 0.16);
+}
+
+.mp-table-cheat[data-theme='dark'] {
+  --felt: #1c1425;
+  --accent: #e84393;
+}
+
+.ct-players {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.ct-player-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid transparent;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+}
+
+.ct-player-chip.ct-you {
+  font-weight: 700;
+}
+
+.ct-player-chip.ct-active {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent-soft);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  animation: mpBlink 1.4s ease-in-out infinite;
+}
+
+.ct-player-chip.ct-out {
+  opacity: 0.55;
+}
+
+.ct-done-mark {
+  padding: 0.05rem 0.4rem;
+  border-radius: 10px;
+  background: #2ecc71;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.ct-center {
+  max-width: 560px;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.ct-rank {
+  font-size: 0.9rem;
+  color: #dce3ec;
+  margin-bottom: 0.6rem;
+}
+
+.ct-rank-big {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-left: 0.4rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.ct-pile {
+  min-height: calc(var(--card-h) * 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ct-pile-empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.ct-pile-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px;
+  max-width: 80%;
+}
+
+.ct-back-card {
+  animation: mpDealIn 0.2s ease-out both;
+}
+
+.ct-back-card:nth-child(n + 4) {
+  margin-left: -8px;
+}
+
+.ct-pile-count {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.ct-pile-decl {
+  margin-left: 0.5rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.ct-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 0.25rem 0 0.25rem;
+}
+
+.mp-table-cheat .mp-primary.ct-act {
+  background: #c0392b;
+}
+
+.mp-table-cheat .mp-primary.ct-act:hover:not(:disabled) {
+  background: #d4483a;
+}
+
+.mp-table-cheat .mp-primary.ct-act:disabled {
+  background: #5a2a22;
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ct-selected {
+  box-shadow: 0 0 0 3px var(--accent) !important;
+  transform: translateY(-10px) !important;
+  border-radius: 10px;
+}
+
+/* ---- ポーカー(5カードドロー) ---- */
+
+.mp-table-poker {
+  --felt: #1f4d3a;
+  --accent: #f1c40f;
+  --accent-soft: rgba(241, 196, 15, 0.16);
+}
+
+.mp-table-poker[data-theme='dark'] {
+  --felt: #0e231a;
+  --accent: #f1c40f;
+}
+
+.pk-table-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.pk-pot {
+  background: rgba(0, 0, 0, 0.28);
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pk-pot b {
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+.pk-phase {
+  color: var(--muted);
+}
+
+.pk-current-bet {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pk-hand-progress {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+}
+
+.pk-chip-line {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+}
+
+.pk-chip {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+}
+
+.pk-chip.pk-broke {
+  color: #ff6b6b;
+  text-decoration: line-through;
+}
+
+.pk-chip.pk-me {
+  margin-left: 0.6rem;
+  color: var(--accent);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.pk-round-bet {
+  color: var(--muted);
+}
+
+.pk-hand-strength {
+  margin-left: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.mp-card-slot.pk-discard-tag .mp-card {
+  opacity: 0.35;
+}
+
+.pk-discard-mark {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e74c3c;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 0.05rem 0.4rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.pk-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  min-height: 44px;
+}
+
+.pk-act {
+  min-width: 110px;
+}
+
+.pk-act.pk-fold {
+  background: #c0392b;
+  border: none;
+  color: #fff;
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pk-act.pk-fold:hover:not(:disabled) {
+  background: #d4483a;
+}
+
+.pk-act.pk-swap {
+  background: #16a085;
+}
+
+.pk-act.pk-swap:hover:not(:disabled) {
+  background: #1abc9c;
+}
+
+.pk-act:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pk-waiting {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.pk-showdown-title {
+  margin: 0.25rem 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.pk-showdown {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pk-showdown li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 0.88rem;
+  opacity: 0.85;
+}
+
+.pk-showdown li.pk-first {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  opacity: 1;
+}
+
+.pk-showdown li > span {
+  line-height: 1.3;
+  font-size: 1rem;
+}
+
+.pk-sd-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.pk-sd-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.pk-sd-name {
+  font-weight: 700;
+  min-width: 64px;
+}
+
+.pk-sd-kind {
+  color: var(--accent);
+}
+
+.pk-sd-cards {
+  display: flex;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+}
+
+.pk-chip-total {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--muted);
+}
+
+.pk-chip-total b {
+  color: var(--accent);
+}
+
+.pk-fold-result {
+  color: var(--muted);
+  margin: 0.5rem 0;
+}
+
+/* ---- 大富豪 ---- */
+
+.df-rev-badge {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 12px;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  animation: mpBlink 1.2s ease-in-out infinite;
+}
+
+.df-ranks {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.df-rank-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid transparent;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+}
+
+.df-rank-chip.df-you {
+  font-weight: 700;
+}
+
+.df-rank-chip.df-active {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent-soft);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  animation: mpBlink 1.4s ease-in-out infinite;
+}
+
+.df-rank-chip.df-out {
+  opacity: 0.55;
+}
+
+.df-count {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.df-badge {
+  padding: 0.05rem 0.45rem;
+  border-radius: 12px;
+  background: #c0392b;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.df-trick {
+  min-height: 140px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  margin-bottom: 0.75rem;
+  padding: 0.6rem;
+  text-align: center;
+}
+
+.df-trick-label {
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  color: #dce3ec;
+}
+
+.df-trick-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.df-trick-cards .mp-card {
+  animation: dfPlayIn 0.25s ease-out both;
+}
+
+.df-trick-cards .mp-card:nth-child(2) { animation-delay: 60ms; }
+.df-trick-cards .mp-card:nth-child(3) { animation-delay: 120ms; }
+.df-trick-cards .mp-card:nth-child(4) { animation-delay: 180ms; }
+
+@keyframes dfPlayIn {
+  from { transform: translateY(-18px) scale(0.9); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.df-trick-empty {
+  padding: 1.9rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.df-card-slot {
+  border-radius: 10px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  cursor: default;
+}
+
+.df-card-slot.df-clickable {
+  cursor: pointer;
+}
+
+.df-card-slot.df-clickable:hover {
+  transform: translateY(-6px);
+}
+
+.df-card-slot.df-playable {
+  animation: dfPlayable 1.3s ease-in-out infinite;
+}
+
+@keyframes dfPlayable {
+  0%, 100% { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 40%, transparent); }
+  50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 80%, transparent); }
+}
+
+.df-card-slot.df-selected {
+  box-shadow: 0 0 0 3px var(--accent), 0 6px 14px rgba(0, 0, 0, 0.4);
+  transform: translateY(-10px);
+  animation: none;
+}
+
+.df-card-slot.df-inplay {
+  box-shadow: 0 0 0 3px #3498db;
+  transform: translateY(-6px);
+}
+
+.df-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.df-selinfo {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.mp-table-daifugo .mp-primary {
+  background: #c0392b;
+}
+
+.mp-table-daifugo .mp-primary:disabled {
+  background: #5a2a22;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.mp-table-daifugo .mp-primary:hover:not(:disabled) {
+  background: #d4483a;
+}
+
+/* ---- レスポンシブ ---- */
+
+@media (max-width: 600px) {
+  .mp-table {
+    padding: 8px;
+  }
+
+  .mp-topbar {
+    padding: 8px 10px;
+    flex-wrap: wrap;
+  }
+
+  .mp-icon-btn {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .mp-title {
+    font-size: 1.15rem;
+    flex: 1;
+  }
+
+  .mp-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .mp-top-btns {
+    gap: 0.3rem;
+  }
+
+  .mp-opponents {
+    gap: 0.5rem;
+  }
+
+  .mp-opponent {
+    min-width: 96px;
+    padding: 0.5rem;
+  }
+
+  .mp-modal {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .mp-hand {
+    gap: 0.3rem;
+  }
+
+  .sv-suit-label {
+    width: 52px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ---- モーション軽減 ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .mp-card-slot,
+  .sv-slot,
+  .df-trick-cards .mp-card,
+  .mp-ranking li,
+  .mp-overlay,
+  .mp-modal,
+  .mp-opponent-target,
+  .sv-card-playable,
+  .sv-player-chip.sv-active,
+  .df-rank-chip.df-active,
+  .df-rev-badge,
+  .mm-player-chip.mm-active,
+  .mm-slot.mm-up .mp-card,
+  .bj-card-slot,
+  .ct-player-chip.ct-active,
+  .ct-back-card,
+  .mp-turn::before {
+    animation: none !important;
+  }
+}
